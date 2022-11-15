@@ -38,7 +38,14 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 1
     // Right now this function is only checking the first <product-item> it found, make it so that
     // it checks every <product-item> it found
-
+    for (let i = 1; i < prodItems.length; i++) {
+      data = await prodItems[i].getProperty('data');
+      plainValue = await data.jsonValue();
+      if (plainValue.title.length == 0) { allArePopulated = false; }
+      if (plainValue.price.length == 0) { allArePopulated = false; }
+      if (plainValue.image.length == 0) { allArePopulated = false; }
+      expect(allArePopulated).toBe(true);
+    }
   }, 10000);
 
   // Check to make sure that when you click "Add to Cart" on the first <product-item> that
