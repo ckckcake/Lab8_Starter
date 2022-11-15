@@ -1,1 +1,3 @@
 # Lab 8 - Starter
+1. I would fit my automated tests within a Github action that runs whenever code is pushed. This is so that before every push is deployed to production, the tests would run and check to see it the code is operational and works as intended.
+2. No, for testing if a function returns the correct output, a unit test would be more appropiate becuase an E2E approach would test more than just that function we're interested in.
