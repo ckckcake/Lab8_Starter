@@ -59,11 +59,15 @@ describe('Basic user flow for Website', () => {
     // Once you have the innerText property, use innerText['_remoteObject'].value to get the text value of it
     const prodItem = await page.$$('product-item');
     let sRoot = await prodItem.getProperty('shadowRoot');
-    let button = await sRoot.$$eval('button');
+    let btn = await sRoot.$('button');
+    //let inner = page.click('btn');
     const [response] = await Promise.all([
       page.waitForNavigation(waitOptions),
-      page.click('button'),
+      page.click('btn'),
     ]);
+    let inner = btn.innerText;
+    let value = await inner.jsonValue();
+    expect(value).toBe('Remove From Cart');
     
     
   }, 2500);
