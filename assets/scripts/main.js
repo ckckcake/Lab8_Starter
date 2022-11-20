@@ -3,6 +3,7 @@
 // Import the storage controller object from storage.js
 // Separating this isn't super necessary for this lab but keeping
 // implementation details separate and silo'd is a nice pattern
+
 import { storage } from './storage.js';
 
 let items; // The variable we'll use to add our array of obejcts we fetch
@@ -11,7 +12,11 @@ let itemsURL = 'assets/json/products.json'; // the URL to fetch from
 // Bind the init() function to run once the page loads
 window.addEventListener('DOMContentLoaded', init);
 
-/** Initializes every function, they all stem from here */
+/**
+ * @description Initializes every function, they all stem from here
+ * @async 
+ * @function init
+ */
 async function init() {
   // Attempt to fetch the product items
   try {
@@ -25,8 +30,10 @@ async function init() {
 }
 
 /**
- * Fetches all of the products from itemsURL top and stores them
+ * @description Fetches all of the products from itemsURL top and stores them
  * inside the global items variable. 
+ * 
+ * @async
  * @returns {Promise} Resolves if the items are found it localStorage or if they
  *                    are fetched correctly
  */
@@ -55,7 +62,8 @@ async function fetchItems() {
 }
 
 /**
- * Adds the Fetched procut items to the webpage
+ * @description Adds the Fetched procut items to the webpage
+ * 
  */
 function populatePage() {
   if (!items) return;
