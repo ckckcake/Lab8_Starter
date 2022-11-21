@@ -75,7 +75,7 @@ describe('Basic user flow for Website', () => {
     // TODO - Step 3
     // Query select all of the <product-item> elements, then for every single product element
     const prodItems = await page.$$('product-item');
-    for (let i = 0; i < prodItems.length; i++) {
+    for (let i = 1; i < prodItems.length; i++) {
       // get the shadowRoot and query select the button inside, and click on it.
       let sRoot = await prodItems[i].getProperty('shadowRoot');
       let btn = await sRoot.$('button');
