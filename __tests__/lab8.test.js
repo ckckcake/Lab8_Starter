@@ -91,17 +91,38 @@ describe('Basic user flow for Website', () => {
   // Check to make sure that after you reload the page it remembers all of the items in your cart
   it('Checking number of items in cart on screen after reload', async () => {
     console.log('Checking number of items in cart on screen after reload...');
-    // TODO - Step 4
-    // Reload the page, then select all of the <product-item> elements, and check every
-    // element to make sure that all of their buttons say "Remove from Cart".
-    // Also check to make sure that #cart-count is still 20
+    /* TODO - Step 4
+    * Reload the page
+    *then select all of the <product-item> elements
+    * Also check to make sure that #cart-count is still 20
+    *and check every element to make sure that all of their buttons say "Remove from Cart".
+    */
+    await page.reload();
+    const prodItems = await page.$$('product-item');
+    for (let i = 0; i < prodItems.length; i++) {
+      let sRoot = await prodItems[i].getProperty('shadowRoot');
+      let btn = await sRoot.$('button');
+      let inner = await btn.getProperty('innerText');
+      let value = await inner.jsonValue();
+      expect(value).toBe('Remove from Cart');
+    }
+    let cartCounter = await page.$('#cart-count');
+    let inner = await cartCounter.getProperty('innerText');
+    let value = await inner.jsonValue();
+    expect(value).toBe('20');
+
   }, 10000);
 
   // Check to make sure that the cart in localStorage is what you expect
   it('Checking the localStorage to make sure cart is correct', async () => {
     // TODO - Step 5
-    // At this point he item 'cart' in localStorage should be 
+    // At this point the item 'cart' in localStorage should be 
     // '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]', check to make sure it is
+    let expectedArray = "[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]"
+    let storedArray = await page.evaluate(() => {
+      return localStorage.getItem('cart');
+    });
+    expect(storedArray).toBe(expectedArray);
   });
 
   // Checking to make sure that if you remove all of the items from the cart that the cart
