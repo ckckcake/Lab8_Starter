@@ -74,7 +74,17 @@ describe('Basic user flow for Website', () => {
     console.log('Checking number of items in cart on screen...');
     // TODO - Step 3
     // Query select all of the <product-item> elements, then for every single product element
-    // get the shadowRoot and query select the button inside, and click on it.
+    const prodItems = await page.$$('product-item');
+    for (let i = 0; i < prodItems.length; i++) {
+      // get the shadowRoot and query select the button inside, and click on it.
+      let sRoot = await prodItems[i].getProperty('shadowRoot');
+      let btn = await sRoot.$('button');
+      await btn.click();
+    }
+    let cartCounter = await page.$('#cart-count');
+    let inner = await cartCounter.getProperty('innerText');
+    let value = await inner.jsonValue();
+    expect(value).toBe('20');
     // Check to see if the innerText of #cart-count is 20
   }, 10000);
 
