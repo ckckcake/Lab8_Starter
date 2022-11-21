@@ -57,17 +57,13 @@ describe('Basic user flow for Website', () => {
     // Grab the shadowRoot of that element (it's a property), then query a button from that shadowRoot.
     // Once you have the button, you can click it and check the innerText property of the button.
     // Once you have the innerText property, use innerText['_remoteObject'].value to get the text value of it
-    const prodItem = await page.$$('product-item');
+    const prodItem = await page.$('product-item');
     let sRoot = await prodItem.getProperty('shadowRoot');
     let btn = await sRoot.$('button');
-    //let inner = page.click('btn');
-    const [response] = await Promise.all([
-      page.waitForNavigation(waitOptions),
-      page.click('btn'),
-    ]);
-    let inner = btn.innerText;
+    await btn.click();
+    let inner = await btn.getProperty('innerText');
     let value = await inner.jsonValue();
-    expect(value).toBe('Remove From Cart');
+    expect(value).toBe('Remove from Cart');
     
     
   }, 2500);
